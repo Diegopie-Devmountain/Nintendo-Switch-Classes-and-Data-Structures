@@ -19,8 +19,8 @@ export function State() {
 
   return(
     <section>
-      <h1>Rerender Child</h1>
-      <button
+      <h1 className='App-Section-Break'>Rerender Child</h1>
+      <button className='App-Default-Button' 
         onClick={() => {
           newSwitch = new NintendoSwitch('blue', ['Mario Kart']);
           console.log(newSwitch);
@@ -28,7 +28,7 @@ export function State() {
       >Get A Blue Switch with Variables</button>
 
       {/* State */}
-      <button
+      <button className='App-Default-Button' 
         onClick={() => {
           // Why Undefined?
           // setNewSwitchState(new NintendoSwitch('red', ['Zelda']));
@@ -42,7 +42,7 @@ export function State() {
       >Get A Blue Switch State</button>
 
       {/* Ref */}
-      <button
+      <button className='App-Default-Button' 
         onClick={() => {
           newSwitchRef.current = new NintendoSwitch('red', ['Zelda']);
           console.log(newSwitchRef);
