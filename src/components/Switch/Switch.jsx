@@ -43,7 +43,7 @@ function Switch() {
 
 
   return (
-    <main className='App-Section-Break'>
+    <main className='App-Section-Break-Large'>
 
       <h1 className='text-center'>Select Your Switch</h1>
 
@@ -54,7 +54,7 @@ function Switch() {
         <article>
           <h3>{!selectColor ? 'Select Your Color' : selectColor}</h3>
 
-          <section  >
+          <section className='Switch-Color-Container'>
             <article className='Switch-Icons-Container' ref={selectSwitchContainer}>
               {userIcons.map(image => (
                 <button className='Switch-Icon-Button' key={image.id} onClick={(e) => {
@@ -64,7 +64,10 @@ function Switch() {
                   domTarget.classList.add('Switch-Icon-Selected')
 
                   setSelectColor(image.color);
+                  var cssRoot = document.querySelector(':root');
 
+                  cssRoot.style.setProperty('--switch-color', image.color.toLocaleLowerCase());
+            
                   // * Set Class Data
 
                   // Removing Border:

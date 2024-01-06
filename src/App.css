@@ -19,3 +19,10 @@
   font-weight: 600;
   padding: 0.3rem 2rem 0.3rem 2rem;
 }
+
+.App_State-Button-Container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem
+}
