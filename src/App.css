@@ -1,0 +1,16 @@
+.Switch-Icons-Container {
+  display: flex;
+  gap: 1rem;
+  width: 60%;
+}
+
+.Switch-Icon {
+  height: 5rem;
+  width: 6rem !important;
+  padding: 0!important;
+}
+
+.User-Icon-Selected {
+  border-style: solid;
+  border-color: green;
+}
