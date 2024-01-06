@@ -18,7 +18,6 @@ function App() {
       <State/>
    
       {/* <Switch /> */}
-      <Switch />
     </main>
   )
 }
