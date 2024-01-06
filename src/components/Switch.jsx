@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { NintendoSwitch } from '../data/how.js'
-import userIcons from "../data/userImg.js";
+import { NintendoSwitch } from '../data/SwitchClass.js'
+import userIcons from "../data/switchImg.js";
 // import './App.css'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 
-function Why() {
+function Switch() {
 
   const userSwitch = useRef(null);
   const previousImg = useRef(null);
@@ -21,14 +21,11 @@ function Why() {
 
 
   const createSwitch = (color) => {
-    console.log(color);
     if (color === '') {
       alert('Select A Color');
       return;
     }
-    console.log(new NintendoSwitch(color, []));
     userSwitch.current = new NintendoSwitch(color, []);
-    console.log(userSwitch);
     setAllGames(userSwitch.current.getGamesInstalled())
     setBatteryLife(userSwitch.current.getBatteryLife())
   }
@@ -63,9 +60,11 @@ function Why() {
             </Row>
             <Row className='Switch-Icons-Container' ref={selectSwitchContainer}>
               {userIcons.map(image => (
-                <button className='Switch-Icon' key={image.id} onClick={(e) => {
+                <button className='Switch-Icon-Button' key={image.id} onClick={(e) => {
                   // Add Border
-                  e.target.classList.add('User-Icon-Selected');
+                  // e.currentTarget.classList.add('Switch-Icon-Selected');
+                  const domTarget = e.target
+                  domTarget.classList.add('Switch-Icon-Selected')
 
                   setSelectColor(image.color);
 
@@ -73,11 +72,11 @@ function Why() {
 
                   // Removing Border:
                   if (!previousImg.current) {
-                    previousImg.current = e.target;
+                    previousImg.current = domTarget;
                     return
                   }
 
-                  previousImg.current.classList.remove('User-Icon-Selected');
+                  previousImg.current.classList.remove('Switch-Icon-Selected');
 
                   previousImg.current = e.target;
                 }}>
@@ -141,7 +140,7 @@ function Why() {
                   {allGames.length > 0 ?
 
                     allGames.map((game) => {
-                      { console.log(game) }
+                      
                       return (
                         <Row xs='3' key={crypto.randomUUID()}>
                           <Button onClick={() => {
@@ -203,4 +202,4 @@ function Why() {
   )
 }
 
-export default Why
+export default Switch

@@ -4,13 +4,23 @@
   width: 60%;
 }
 
+.Switch-Icon-Button {
+  width: 6.1rem!important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0!important;
+
+}
+
 .Switch-Icon {
   height: 5rem;
   width: 6rem !important;
   padding: 0!important;
 }
 
-.User-Icon-Selected {
+.Switch-Icon-Selected {
   border-style: solid;
   border-color: green;
+  border-width: 6px;
 }
