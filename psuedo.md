@@ -16,19 +16,7 @@
   
 ## Create Front End
 
-### Create a class when selecting a color
 
-- Where are we going to store it? Intro useRef
-- Set State for What WILL update on render
-  
-### Disable Buttons onClick
-
-- useRef to create a reference to button container
-- useEffect to listen to any interaction to createSwitch function
-
-### Sell Switch Button
-
-- reset ref and classes
 
 
 ## Intro App
@@ -67,3 +55,24 @@ setNewSwitchState(prevState => {
 - A) This child is re-rendered, so our state is set to it's initial value
 
 - Now let's use useRef
+
+
+
+## Using The Switch Component
+
+### Intro Component
+
+
+### Create a class when selecting a color
+
+- Where are we going to store it? Intro useRef
+- Set State for What WILL update on render
+  
+### Disable Buttons onClick
+
+- useRef to create a reference to button container
+- useEffect to listen to any interaction to createSwitch function
+
+### Sell Switch Button
+
+- reset ref and classes
