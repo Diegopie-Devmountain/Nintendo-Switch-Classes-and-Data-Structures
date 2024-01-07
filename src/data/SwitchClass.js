@@ -7,9 +7,10 @@ export class NintendoSwitch {
   _batteryLife = this._maxBattery;
 
 
-  constructor(color, gamesInstalled) {
+  constructor(color, gamesInstalled, batteryLife = this._maxBattery) {
     this._color = color;
     this._gamesInstalled = gamesInstalled;
+    this._batteryLife = batteryLife;
   }
 
   // Abstraction 
@@ -35,6 +36,14 @@ export class NintendoSwitch {
   chargeSwitch() {
     this._batteryLife = this._maxBattery;
     return 'Battery is fully charged!'
+  }
+
+  getAllData() {
+    return {
+      color: this._color,
+      gamesInstalled: this._gamesInstalled,
+      batteryLife: this._batteryLife,
+    }
   }
 
 }

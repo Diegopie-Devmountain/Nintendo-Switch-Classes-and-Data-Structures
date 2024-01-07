@@ -60,6 +60,7 @@
 .Switch-Games-Container {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   width: 70%;
   gap: 1.4rem;
 }

@@ -11,12 +11,13 @@ function Switch() {
   const [selectColor, setSelectColor] = useState('');
 
   const selectSwitchContainer = useRef(null);
+  const selectGamesContainer = useRef(null);
 
   const installGameValue = useRef();
 
   // Make this after play games fails to load
   const [allGames, setAllGames] = useState([]);
-  const [batteryLife, setBatteryLife] = useState(0);
+  const [batteryLife, setBatteryLife] = useState(null);
 
 
   const createSwitch = (color) => {
@@ -25,21 +26,44 @@ function Switch() {
       return;
     }
     userSwitch.current = new NintendoSwitch(color, []);
-    setAllGames(userSwitch.current.getGamesInstalled())
-    setBatteryLife(userSwitch.current.getBatteryLife())
-  }
+    setAllGames(userSwitch.current.getGamesInstalled());
+    setBatteryLife(userSwitch.current.getBatteryLife());
 
-  useEffect(() => {
-    if (userSwitch.current === null) {
-      return;
-    }
     const allButtons = selectSwitchContainer.current.children;
 
     Array.from(allButtons).forEach((button => {
       button.disabled = true;
     }))
 
-  }, [createSwitch])
+    localStorage.setItem('userSwitch', JSON.stringify(userSwitch.current.getAllData()));
+  }
+
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('userSwitch'));
+    console.log('oh f');
+
+    if (!userSwitch.current && localData !== null) {
+      console.log('hit');
+
+      const { color, gamesInstalled, batteryLife } = JSON.parse(localStorage.getItem('userSwitch'));
+
+      userSwitch.current = new NintendoSwitch(color, gamesInstalled, batteryLife);
+
+      setAllGames(userSwitch.current.getGamesInstalled());
+      setBatteryLife(userSwitch.current.getBatteryLife());
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (batteryLife === null) {
+      return;
+    }
+    if (batteryLife <= 0 ) {
+      console.log('battery');
+      alert('No Power! Charge your switch');
+    }
+  }, [batteryLife]);
 
 
   return (
@@ -47,7 +71,7 @@ function Switch() {
 
       <h1 className='text-center'>Select Your Switch</h1>
 
-      <section className='App-Section-Break Switch-SelectSwitch-Container'>
+      <section className='App-Section-Break Switch-SelectSwitch-Container mb-5'>
         <article className='Switch-Console-Container'>
           <img className='Switch-Console-Img' src='https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/products/hardware/nintendo-switch-red-blue/110478-nintendo-switch-neon-blue-neon-red-front-screen-on-1200x675' />
         </article>
@@ -60,25 +84,26 @@ function Switch() {
                 <button className='Switch-Icon-Button' key={image.id} onClick={(e) => {
                   // Add Border
                   // e.currentTarget.classList.add('Switch-Icon-Selected');
-                  const domTarget = e.target
+                  const domTarget = e.target;
+
                   domTarget.classList.add('Switch-Icon-Selected')
 
                   setSelectColor(image.color);
                   var cssRoot = document.querySelector(':root');
 
                   cssRoot.style.setProperty('--switch-color', image.color.toLocaleLowerCase());
-            
+
                   // * Set Class Data
 
                   // Removing Border:
                   if (!previousImg.current) {
                     previousImg.current = domTarget;
-                    return
+                    return;
                   }
 
                   previousImg.current.classList.remove('Switch-Icon-Selected');
 
-                  previousImg.current = e.target;
+                  previousImg.current = domTarget;
                 }}>
 
                   <img
@@ -101,10 +126,13 @@ function Switch() {
                   setAllGames([]);
                   setBatteryLife(0);
 
+
                   const allButtons = selectSwitchContainer.current.children;
                   Array.from(allButtons).forEach((button => {
                     button.disabled = false;
                   }))
+
+                  localStorage.clear();
                 }} >Sell Switch</button>
                 : null
               }
@@ -122,27 +150,35 @@ function Switch() {
               <h3>
                 Current Battery Life: {batteryLife}
               </h3>
-                <button variant="outline-primary" className='App-Default-Button mt-3' onClick={() => {
-                  userSwitch.current.chargeSwitch();
-                  setBatteryLife(userSwitch.current.getBatteryLife());
-                }}>Charge Switch</button>
-              
+              <button variant="outline-primary" className='App-Default-Button mt-3' onClick={() => {
+                userSwitch.current.chargeSwitch();
+                setBatteryLife(userSwitch.current.getBatteryLife());
+              }}>Charge Switch</button>
+
             </section>
-            <section>
+            <section className='Switch-Color-Container'>
               <h3>Play Games: </h3>
 
-              <article className='Switch-Games-Container'>
+              <article className='Switch-Games-Container' ref={selectGamesContainer}>
                 {allGames.length > 0 ?
 
                   allGames.map((game) => {
 
                     return (
-                        <button  key={crypto.randomUUID()} className='Switch-PlayGame-Button' onClick={() => {
-                          alert(`${userSwitch.current.playGame(game)}`)
-                          setBatteryLife((prev) => {
-                            return prev = userSwitch.current.getBatteryLife();
-                          })
-                        }}>{game}</button>
+                      <button key={crypto.randomUUID()} className='Switch-PlayGame-Button' onClick={() => {
+                        if (batteryLife <= 0 ) {
+                          alert('No Power! Charge your switch');
+                          return;
+                        }
+
+                        alert(`${userSwitch.current.playGame(game)}`);
+
+
+                        setBatteryLife(userSwitch.current.getBatteryLife());
+
+                        localStorage.setItem('userSwitch', JSON.stringify(userSwitch.current.getAllData()));
+
+                      }}>{game}</button>
                     )
                   })
 
@@ -174,6 +210,7 @@ function Switch() {
               // * The reference to the array is the same, so react to doesn't detect the change, even it is storing the value. You won't see the changes until you force react to rerender by saving or changing state somewhere else
               // setAllGames(userSwitch.current.getGamesInstalled());
               setAllGames([...userSwitch.current.getGamesInstalled()]);
+              localStorage.setItem('userSwitch', JSON.stringify(userSwitch.current.getAllData()))
 
 
             }}>

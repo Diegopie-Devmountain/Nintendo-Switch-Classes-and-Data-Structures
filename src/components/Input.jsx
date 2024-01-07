@@ -7,8 +7,22 @@ export default function Input() {
 
   return (
     <section>
-      <label htmlFor='updateState'>Updating Sibling State</label>
-      <input name='updateState' id='updateState' value={updateParentState} onChange={e => setUpdateParentState(e.target.value)} />
+     <form onSubmit={(e) => {
+        e.preventDefault()
+        console.log(parentStateRef.current.value);
+        
+      }}>
+
+        <label htmlFor='updateState'>Updating Parent State</label>
+        <input 
+          name='updateState' 
+          id='updateState'
+          value={updateParentState}
+          onChange={e => setUpdateParentState(e.target.value)}
+          ref={parentStateRef} 
+          />
+        <button type='submit'>Search Game</button>
+      </form>
     </section>
   )
 }

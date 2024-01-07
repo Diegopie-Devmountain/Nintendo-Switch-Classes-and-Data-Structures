@@ -9,7 +9,7 @@ export function State() {
 
   console.log({ variable: newSwitch });
 
-  const [newSwitchState, setNewSwitchState] = useState();
+  const [newSwitchState, setNewSwitchState] = useState(null);
 
   console.log({ state: newSwitchState });
 
@@ -32,12 +32,13 @@ export function State() {
         <button className='App-Default-Button'
           onClick={() => {
             // Why Undefined?
-            // setNewSwitchState(new NintendoSwitch('red', ['Zelda']));
+            setNewSwitchState(new NintendoSwitch('red', ['Zelda']));
+            console.log(newSwitchState);
 
-            setNewSwitchState(prevState => {
-              prevState = new NintendoSwitch('Blue', ['Smash Bros'])
-              console.log(prevState);
-            });
+            // setNewSwitchState(prevState => {
+            //   prevState = new NintendoSwitch('Blue', ['Smash Bros'])
+            //   console.log(prevState);
+            // });
 
           }}
         >Get A Blue Switch State</button>
