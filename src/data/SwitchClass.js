@@ -49,7 +49,7 @@ export class NintendoSwitch {
 
   async downloadGame() {
     // Demo using normal function
-    const mockAsyncOperation = () => {
+    const downloader = () => {
       const { name: gameToDownload, fileSize } = this._downloadQueue.peek();
       console.log(`Downloading ${gameToDownload}`);
       const timeForDownload = (fileSize / this._downloadSpeed) * 100;
@@ -59,6 +59,7 @@ export class NintendoSwitch {
       return new Promise((resolve) => {
         setTimeout(() => {
           this._downloadQueue.dequeue();
+          this._gamesInstalled.push(newGame);
           resolve(`Downloaded ${gameToDownload}`);
         }, timeForDownload);
       });
@@ -66,7 +67,7 @@ export class NintendoSwitch {
 
     while (!this._downloadQueue.isEmpty()) {
       console.log(this._downloadQueue._data);
-      console.log(await mockAsyncOperation());
+      console.log(await downloader());
     }
 
     this._downloadQueue = null;
