@@ -65,8 +65,8 @@ function viewGames() {
   const playGameChoices = userGames.map((game) => {
     return game.name;
   });
-  
-  console.log(playGameChoices);
+
+  // console.log(playGameChoices);
   const playGamePrompt = {
     type: "list",
     name: "playGamePrompt",
@@ -74,13 +74,53 @@ function viewGames() {
     choices: playGameChoices,
   };
 
-  inquirer.prompt(playGamePrompt)
-  .then(({ playGamePrompt }) => {
+  inquirer.prompt(playGamePrompt).then(({ playGamePrompt }) => {
     console.log(userSwitch.playGame(playGamePrompt));
-    useOS();
+    setTimeout(() => {
+      useOS();
+    }, 4000);
   });
-
 }
 
+function viewStore() {
+  const viewStoreChoices = Object.values(games).map((game) => game.name);
+  viewStoreChoices.unshift('Go Back')
+  if (viewStoreChoices.length > 10) {
+    viewStoreChoices.push('Go Back');
+  }
 
-function viewStore() {}
+  const viewStorePrompt = {
+    type: "list",
+    loop: false,
+    name: "viewStorePrompt",
+    message: "What Game Would You Like To View?",
+    choices: viewStoreChoices,
+  };
+
+  inquirer.prompt(viewStorePrompt).then( async ({ viewStorePrompt }) => {
+    if (viewStorePrompt === 'Go Back') {
+      return useOS();
+    }
+    const gameData = games[viewStorePrompt.toLowerCase().replace(/\s+/g, "-")];
+    console.log(gameData);
+
+    const installPrompt = {
+      type: "list",
+      loop: false,
+      name: "installPrompt",
+      message: "Would you like to install?",
+      choices: ['Install Game!', 'Go Back'],
+    };
+
+    const { installPromptResponse } = await inquirer.prompt(installPrompt);
+
+    if (installPromptResponse === 'Install Game!') {
+      console.log(userSwitch.installGame(gameData.name));
+    } else {
+      viewStore()
+    }
+    
+  });
+}
+
+// need to setup download, message if download exists, and go back in view games

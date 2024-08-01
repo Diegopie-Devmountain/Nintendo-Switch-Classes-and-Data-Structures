@@ -1,0 +1,20 @@
+# Inquirer Demo
+
+`npm install inquirer`
+
+## Create an array of prompts
+
+```js
+const questions = [
+  {
+    // The type of prompt to display
+    type: 'list',
+    // name of this prompt to access from prompts key
+    name: 'color',
+    message: 'What color Switch do you want?',
+    filter(value) {
+      return value.toLowerCase()
+    }
+  }
+];
+```
