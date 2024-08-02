@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import { NintendoSwitch, NintendoSwitchOLED } from "./SwitchClass.js";
 import prompts from "./prompts.js";
-import { games } from "./utils.js";
+import { games } from "./utils/games.js";
 
 let userSwitch = null;
 

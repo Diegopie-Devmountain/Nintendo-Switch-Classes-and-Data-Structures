@@ -1,4 +1,4 @@
-import { games, DownloadQueue } from "./utils.js";
+import { games, DownloadQueue } from "./utils/data-structures.js";
 
 export class NintendoSwitch {
   _color = String;
