@@ -57,6 +57,24 @@ export class LinkedList {
     }
     return null;
   }
+  // add a game to beginning
+  prepend(data) {
+    const newNode = new Node(data);
+
+    if (this.head === null) {
+      // list is empty, will be first item
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      const secondNode = this.head;
+      newNode.next = secondNode; // update new node so that .next points to the new second item in the list
+      secondNode.previous = newNode; // update new second to point to new first node
+
+      this.head = newNode; // update head to be new first item in list
+    }
+    this.length++;
+    return newNode;
+  }
 
   // Append new node with given data to end of list
   append(data) {
