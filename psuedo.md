@@ -78,8 +78,6 @@ We can use local storage to save data in this browser.
 - Q) How do we see this and what data do we get?
 - A) The application tab of dev tool will show local storage
 
-
-
 ### Prevent Battery from dying
 
 use console logs to understand when your use effect is being used
